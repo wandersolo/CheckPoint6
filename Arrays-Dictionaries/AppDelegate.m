@@ -17,6 +17,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // Create a random number array containing numbers 0 to 100
+    NSArray *randomNumArray = @[];
+    
+    // int r = arc4random_uniform(74);
+
     return YES;
 }
 
