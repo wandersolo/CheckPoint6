@@ -18,11 +18,48 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    // Create a random number array containing numbers 0 to 100
-    NSArray *randomNumArray = @[];
+    // Create a random number array containing six unique lottery numbers
     
-    // int r = arc4random_uniform(74);
+    
+    NSMutableArray *lottoArray =  [NSMutableArray array];
 
+    
+    for (NSInteger idx = 0; idx < 6; idx++) {
+        int r = arc4random_uniform(59);
+        [lottoArray addObject:[NSNumber numberWithInt:r]];
+    }
+    
+    [lottoArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSNumber *num1 = (NSNumber *)obj1;
+        NSNumber *num2 = (NSNumber *)obj2;
+        if (num1 < num2) {
+            return NSOrderedAscending;
+        } else if (num2 < num1) {
+            return NSOrderedDescending;
+        }
+        return NSOrderedSame;
+    }];
+    NSString *lottoNumbers = [lottoArray componentsJoinedByString:@", "];
+    
+    NSLog(@"Your lucky lotto numbers are %@", lottoNumbers);
+    
+    // Pick a random day of week to play lottery numbers
+    NSArray *daysArray = @[@"Sunday", @"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday"];
+    
+    int n = arc4random_uniform(6);
+    
+    NSLog(@"Your lucky day is %@", daysArray[n]);
+    
+    
+    
+    // Add lottery nums and day of week to play to dict
+    
+    NSDictionary *justMyLuck = @{@"Lotto Numbers" : lottoArray,
+                                       @"Day" : daysArray[n]};
+    [justMyLuck enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSLog(@"Your Lucky %@: %@", key, obj);
+    }];
+    
     return YES;
 }
 
